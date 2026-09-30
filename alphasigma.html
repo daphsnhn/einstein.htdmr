@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>For Ma'am Ress</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .page2 .message-card {
+            position: relative;
+            overflow: visible;
+        }
+
+        /* =========================
+           ENVELOPE
+        ========================= */
+
+        .page2 .envelope {
+            position: absolute;
+            inset: 25px;
+
+            background: #f9fcfc;
+
+            border: 3px solid #173b59;
+
+            overflow: hidden;
+
+            z-index: 5;
+
+            perspective: 1000px;
+        }
+
+        .page2 .envelope-back {
+            position: absolute;
+            inset: 0;
+
+            background: #f9fcfc;
+
+            z-index: 1;
+        }
+
+
+        /* =========================
+           CARD STACK
+        ========================= */
+
+        .page2 .message-stack {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            top: 0;
+            left: 0;
+
+            z-index: 4;
+
+            opacity: 0;
+            visibility: hidden;
+
+            pointer-events: none;
+
+            /*
+                IMPORTANT:
+                Cards start LOW inside the envelope.
+                This keeps the writing hidden.
+            */
+            transform: translateY(48%);
+
+            transition:
+                transform 0.7s ease,
+                opacity 0.35s ease;
+        }
+
+        .page2 .envelope.open .message-stack {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        /* =========================
+           INDIVIDUAL CARDS
+        ========================= */
+
+        .page2 .inside-card {
+            position: absolute;
+
+            width: 84%;
+            height: 64%;
+
+            top: 4%;
+            left: 8%;
+
+            background: #fffefa;
+
+            border: 3px solid #173b59;
+
+            box-shadow:
+                5px 5px 0 rgba(139, 187, 211, 0.28);
+
+            padding: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            color: #173b59;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            box-sizing: border-box;
+
+            pointer-events: none;
+        }
+
+        .page2 .inside-card h2 {
+            margin: 0;
+
+            font-size: 25px;
+
+            font-weight: normal;
+
+            letter-spacing: 1px;
+        }
+
+        .page2 .inside-card p {
+            margin-top: 18px;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+        }
+
+
+        .page2 .inside-card:nth-child(1) {
+            z-index: 4;
+
+            transform:
+                translateY(0)
+                translateX(0)
+                rotate(0deg);
+        }
+
+        .page2 .inside-card:nth-child(2) {
+            z-index: 3;
+
+            transform:
+                translateY(12px)
+                translateX(5px)
+                rotate(1deg);
+        }
+
+        .page2 .inside-card:nth-child(3) {
+            z-index: 2;
+
+            transform:
+                translateY(24px)
+                translateX(9px)
+                rotate(-1deg);
+        }
+
+        .page2 .inside-card:nth-child(4) {
+            z-index: 1;
+
+            transform:
+                translateY(36px)
+                translateX(13px)
+                rotate(1deg);
+        }
+
+
+        /* =========================
+           ENVELOPE POCKET
+        ========================= */
+
+        .page2 .envelope-pocket {
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 48%;
+
+            /*
+                Soft blue-white instead of beige
+            */
+            background: #e5f0f3;
+
+            clip-path: polygon(
+                0 0,
+                50% 53%,
+                100% 0,
+                100% 100%,
+                0 100%
+            );
+
+            z-index: 8;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           ENVELOPE FLAP
+        ========================= */
+
+        .page2 .envelope-flap {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 52%;
+
+            /*
+                Soft pale blue
+            */
+            background: #dcebf0;
+
+            clip-path: polygon(
+                0 0,
+                100% 0,
+                50% 100%
+            );
+
+            transform-origin: top center;
+
+            transform: rotateX(0deg);
+
+            transition:
+                transform 0.8s ease;
+
+            z-index: 10;
+
+            pointer-events: none;
+        }
+
+        .page2 .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+
+        /* =========================
+           HEART SEAL
+        ========================= */
+
+        .page2 .envelope-seal {
+            position: absolute;
+
+            left: 50%;
+            top: 47%;
+
+            width: 46px;
+            height: 46px;
+
+            transform:
+                translate(-50%, -50%);
+
+            border-radius: 50%;
+
+            background: #a7cddd;
+
+            border: 3px solid #173b59;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #173b59;
+
+            font-size: 20px;
+
+            z-index: 12;
+
+            transition:
+                opacity 0.35s ease,
+                transform 0.35s ease;
+        }
+
+        .page2 .envelope.open .envelope-seal {
+            opacity: 0;
+
+            transform:
+                translate(-50%, -50%)
+                scale(0.7);
+        }
+
+
+        /* =========================
+           REAL PAPER TAB
+        ========================= */
+
+        .page2 .pull-tab {
+            position: absolute;
+
+            left: 50%;
+
+            /*
+                It sits on the hidden cards,
+                not at the bottom like a button.
+            */
+            bottom: 30%;
+
+            width: 62px;
+            height: 22px;
+
+            transform:
+                translateX(-50%);
+
+            background: #a7cddd;
+
+            border: 2px solid #173b59;
+
+            border-radius: 3px;
+
+            z-index: 14;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            cursor: grab;
+
+            touch-action: none;
+
+            transition:
+                opacity 0.3s ease;
+        }
+
+        /*
+            Small horizontal detail
+            makes it look like a paper tab.
+        */
+
+        .page2 .pull-tab::after {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 22px;
+            height: 2px;
+
+            background: #173b59;
+
+            transform:
+                translate(-50%, -50%);
+
+            opacity: 0.55;
+        }
+
+        .page2 .envelope.open .pull-tab {
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+        }
+
+        .page2 .envelope.pulled .pull-tab {
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           CARDS FULLY PULLED OUT
+        ========================= */
+
+        .page2 .envelope.pulled .message-stack {
+
+            /*
+                Cards move all the way upward
+                from their hidden starting position.
+            */
+
+            transform:
+                translateY(-25%);
+
+            z-index: 20;
+
+            pointer-events: auto;
+        }
+
+        .page2 .envelope.pulled .inside-card {
+            pointer-events: auto;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           PUT BACK
+        ========================= */
+
+        .page2 .put-back {
+            position: absolute;
+
+            left: 50%;
+            bottom: 18px;
+
+            transform:
+                translateX(-50%);
+
+            padding: 8px 18px;
+
+            background: #a7cddd;
+
+            border: 2px solid #173b59;
+
+            border-radius: 3px;
+
+            color: #173b59;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 12px;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            z-index: 30;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+        .page2 .envelope.pulled .put-back {
+            opacity: 1;
+
+            pointer-events: auto;
+        }
+
+
+        /* =========================
+           CLOSING
+        ========================= */
+
+        .page2 .envelope.closing .message-stack {
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translateY(48%) !important;
+
+            pointer-events: none;
+        }
+
+        .page2 .envelope.closing .pull-tab {
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+        .page2 .envelope.closing .put-back {
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           DECORATIVE PAPER STACK
+        ========================= */
+
+        .page2 .paper-stack {
+            position: absolute;
+
+            right: 5px;
+            bottom: -165px;
+
+            width: 280px;
+            height: 130px;
+
+            z-index: 0;
+
+            pointer-events: none;
+        }
+
+        .page2 .paper-back,
+        .page2 .paper-middle,
+        .page2 .paper-front {
+
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            background: #fffefa;
+
+            border: 2px solid #173b59;
+        }
+
+        .page2 .paper-back {
+            transform:
+                translate(14px, 14px)
+                rotate(2deg);
+        }
+
+        .page2 .paper-middle {
+            transform:
+                translate(7px, 7px)
+                rotate(-1deg);
+        }
+
+        .page2 .paper-front {
+            transform:
+                rotate(1deg);
+        }
+
+        .page2 .tiny-heart {
+            position: absolute;
+
+            right: 12px;
+            bottom: 8px;
+
+            color:
+                rgba(139, 107, 92, 0.35);
+
+            font-size: 20px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .page2 .envelope {
+                inset: 20px;
+            }
+
+            .page2 .inside-card {
+
+                width: 84%;
+                height: 60%;
+
+                left: 8%;
+                top: 5%;
+
+                padding: 18px;
+            }
+
+            .page2 .inside-card h2 {
+                font-size: 21px;
+            }
+
+            .page2 .inside-card p {
+                font-size: 15px;
+            }
+
+            .page2 .paper-stack {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="page2">
+
+        <div class="scrapbook">
+
+
+            <!-- MESSAGE / ENVELOPE -->
+
+            <section class="message-card">
+
+                <div class="tape tape-one"></div>
+
+
+                <div class="card-content">
+
+                    <h1>
+                        HAPPY TEACHERS' DAY MA'AAAAAAMMM
+                    </h1>
+
+                    <div class="divider">
+                        ── ✿ ──
+                    </div>
+
+                    <p>
+                        
+                    </p>
+
+                    <p>
+                        sixseveeeeeeeeeeeeeennnnnnnnnnnnnnnn
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="envelope"
+                    id="envelope">
+
+
+                    <div class="envelope-back"></div>
+
+
+                    <!-- CARD STACK -->
+
+                    <div
+                        class="message-stack"
+                        id="messageStack">
+
+
+                        <div class="inside-card">
+
+                            <div>
+
+                                <h2>
+                                    
+                                </h2>
+
+                                <p>
+                                    Thank uuuuuuuuuu maam resssssss, for everything you’ve done for us. We really appreciate you! <3
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="inside-card">
+
+                            <div>
+
+                                <h2>
+                                THANK U MAAAAAAAAAAMMMMM
+                                </h2>
+
+                                <p>
+                                    for all the laughs and talks, for putting up with our kabanha and "panghatag ug handouts ma'am," <br> and for staying patient when we make things harder than they are supposed to be :P
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="inside-card">
+
+                            <div>
+
+                                <h2>
+                                   
+                                </h2>
+
+                                <p>
+                                    u made our grade 10 experience fun and a lot more memorable, even if naay times na very lisod sabton ang comprog :D. comprog will never be the same comprog we enjoyed before, mezzu maam
+                                </p>
+
+                        </div>
+                    </div>
+
+
+                        <div class="inside-card">
+
+                            <div>
+
+                                <h2>
+                                    we'll surely miss having u as our comprog teacherr. u the best ma'am, see u around ♡ 
+                                </h2>
+
+                                <p>
+                                    with lots of love and craziness, from 10 einstein.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- FRONT POCKET -->
+
+                    <div class="envelope-pocket"></div>
+
+
+                    <!-- FLAP -->
+
+                    <div class="envelope-flap"></div>
+
+
+                    <!-- SEAL -->
+
+                    <div class="envelope-seal">
+                        ♡
+                    </div>
+
+
+                    <!-- PAPER TAB -->
+
+                    <div
+                        class="pull-tab"
+                        id="pullTab">
+                    </div>
+
+
+                    <!-- PUT BACK -->
+
+                    <button
+                        class="put-back"
+                        id="putBack"
+                        type="button">
+
+                        PUT BACK
+
+                    </button>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- PHOTO -->
+
+            <section class="photo-card">
+
+                <div class="tape tape-two"></div>
+
+                <div class="photo-frame">
+
+                    <img
+                        src="maamrezzlay.jpg.png"
+                        alt="basta picture">
+
+                </div>
+
+            </section>
+
+
+            <!-- HOME -->
+
+            <a
+                href="einstein.html"
+                class="home-card">
+
+                <div class="home-inner">
+                    HOME
+                </div>
+
+            </a>
+
+
+            <!-- DECORATIVE PAPER -->
+
+            <div class="paper-stack">
+
+                <div class="paper-back"></div>
+
+                <div class="paper-middle"></div>
+
+                <div class="paper-front">
+
+                    <span class="tiny-heart">
+                        ♡
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        const envelope =
+            document.getElementById("envelope");
+
+        const pullTab =
+            document.getElementById("pullTab");
+
+        const putBack =
+            document.getElementById("putBack");
+
+        const messageStack =
+            document.getElementById("messageStack");
+
+
+        let cards =
+            Array.from(
+                document.querySelectorAll(".inside-card")
+            );
+
+
+        let opened = false;
+        let pulled = false;
+        let closing = false;
+
+        let dragging = false;
+
+        let startY = 0;
+        let currentY = 0;
+
+
+        /* =========================
+           OPEN ENVELOPE
+        ========================= */
+
+        envelope.addEventListener(
+            "click",
+            function(event) {
+
+                if (closing) {
+                    return;
+                }
+
+                if (
+                    event.target.closest(".pull-tab") ||
+                    event.target.closest(".put-back") ||
+                    event.target.closest(".inside-card")
+                ) {
+                    return;
+                }
+
+                if (!opened) {
+
+                    opened = true;
+
+                    envelope.classList.add("open");
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           START DRAGGING
+        ========================= */
+
+        pullTab.addEventListener(
+            "pointerdown",
+            function(event) {
+
+                if (
+                    !opened ||
+                    pulled ||
+                    closing
+                ) {
+                    return;
+                }
+
+                dragging = true;
+
+                startY =
+                    event.clientY;
+
+                pullTab.setPointerCapture(
+                    event.pointerId
+                );
+
+                event.preventDefault();
+
+            }
+        );
+
+
+       
+        pullTab.addEventListener(
+            "pointermove",
+            function(event) {
+
+                if (
+                    !dragging ||
+                    pulled ||
+                    closing
+                ) {
+                    return;
+                }
+
+
+                currentY =
+                    startY -
+                    event.clientY;
+
+
+                if (currentY < 0) {
+                    currentY = 0;
+                }
+
+
+                if (currentY > 300) {
+                    currentY = 300;
+                }
+
+
+                pullTab.style.transform =
+                    "translateX(-50%) translateY(-" +
+                    currentY +
+                    "px)";
+
+
+                messageStack.style.transform =
+                    "translateY(calc(48% - " +
+                    (currentY * 1.15) +
+                    "px))";
+
+            }
+        );
+
+
+        pullTab.addEventListener(
+            "pointerup",
+            function() {
+
+                if (!dragging) {
+                    return;
+                }
+
+                dragging = false;
+
+
+                if (currentY >= 80) {
+
+                    pulled = true;
+
+                    envelope.classList.add(
+                        "pulled"
+                    );
+
+
+                    pullTab.style.transform =
+                        "translateX(-50%)";
+
+
+                } else {
+
+                    /*
+                        NOT PULLED FAR ENOUGH
+                    */
+
+                    pullTab.style.transform =
+                        "translateX(-50%)";
+
+
+                    messageStack.style.transform =
+                        "translateY(48%)";
+
+                }
+
+
+                currentY = 0;
+
+            }
+        );
+
+
+        pullTab.addEventListener(
+            "pointercancel",
+            function() {
+
+                dragging = false;
+
+                currentY = 0;
+
+                pullTab.style.transform =
+                    "translateX(-50%)";
+
+                messageStack.style.transform =
+                    "translateY(48%)";
+
+            }
+        );
+
+
+    
+        function arrangeCards() {
+
+            cards.forEach(
+                function(card, index) {
+
+                    if (index === 0) {
+
+                        card.style.zIndex = 4;
+
+                        card.style.transform =
+                            "translateY(0) translateX(0) rotate(0deg)";
+
+                    }
+
+                    else if (index === 1) {
+
+                        card.style.zIndex = 3;
+
+                        card.style.transform =
+                            "translateY(12px) translateX(5px) rotate(1deg)";
+
+                    }
+
+                    else if (index === 2) {
+
+                        card.style.zIndex = 2;
+
+                        card.style.transform =
+                            "translateY(24px) translateX(9px) rotate(-1deg)";
+
+                    }
+
+                    else {
+
+                        card.style.zIndex = 1;
+
+                        card.style.transform =
+                            "translateY(36px) translateX(13px) rotate(1deg)";
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        cards.forEach(
+            function(card) {
+
+                card.addEventListener(
+                    "click",
+                    function(event) {
+
+                        if (
+                            !pulled ||
+                            closing
+                        ) {
+                            return;
+                        }
+
+                        event.stopPropagation();
+
+
+                        if (
+                            card !==
+                            messageStack.firstElementChild
+                        ) {
+                            return;
+                        }
+
+
+                        messageStack.appendChild(
+                            card
+                        );
+
+
+                        cards =
+                            Array.from(
+                                messageStack.children
+                            );
+
+
+                        arrangeCards();
+
+                    }
+                );
+
+            }
+        );
+
+
+        putBack.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+
+                if (
+                    !pulled ||
+                    closing
+                ) {
+                    return;
+                }
+
+
+                closing = true;
+                pulled = false;
+
+
+                envelope.classList.remove(
+                    "pulled"
+                );
+
+                envelope.classList.add(
+                    "closing"
+                );
+
+
+                messageStack.style.transform =
+                    "translateY(48%)";
+
+
+                setTimeout(
+                    function() {
+
+                        envelope.classList.remove(
+                            "open"
+                        );
+
+                    },
+                    250
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        envelope.classList.remove(
+                            "closing"
+                        );
+
+
+                        opened = false;
+                        closing = false;
+
+
+                        messageStack.style.transform =
+                            "translateY(48%)";
+
+
+                        pullTab.style.transform =
+                            "translateX(-50%)";
+
+
+                        currentY = 0;
+
+
+                        arrangeCards();
+
+                    },
+                    1000
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
