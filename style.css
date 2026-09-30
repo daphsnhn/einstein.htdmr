@@ -1077,3 +1077,273 @@ body::before {
     }
 }
 }
+
+/* =========================================================
+   FINAL MOBILE RESPONSIVE FIX
+   Keeps the whole site inside the phone screen.
+   ========================================================= */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ---------- COVER / FIRST PAGE ---------- */
+
+@media (max-width: 600px) {
+
+    .cover-page {
+        min-height: 100svh;
+        padding: 25px 12px;
+    }
+
+    .notepad {
+        width: 100%;
+        min-height: 430px;
+        padding: 25px 14px;
+        box-shadow:
+            7px 7px 0 var(--blue),
+            12px 12px 0 rgba(139, 107, 92, 0.35);
+    }
+
+    .cover-content {
+        padding: 35px 12px;
+    }
+
+    .cover-content h1 {
+        font-size: clamp(21px, 7vw, 28px);
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    .button {
+        max-width: 90%;
+        margin-top: 32px;
+        padding: 12px 20px;
+    }
+
+    .paper-decoration {
+        font-size: 18px;
+    }
+
+    .top-left {
+        top: 18px;
+        left: 18px;
+    }
+
+    .top-right {
+        top: 18px;
+        right: 18px;
+    }
+
+    .bottom-left {
+        bottom: 18px;
+        left: 18px;
+    }
+
+    .bottom-right {
+        bottom: 18px;
+        right: 18px;
+    }
+
+
+    /* ---------- PAGE 2 / SCRAPBOOK ---------- */
+
+    .page2 {
+        min-height: 100svh;
+        padding: 20px 10px;
+    }
+
+    .page2 .scrapbook {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .page2 .message-card {
+        width: 100%;
+        min-height: 570px;
+        padding: 15px;
+        box-shadow: 6px 6px 0 rgba(126, 173, 199, 0.45);
+    }
+
+    .page2 .message-card::after {
+        inset: 15px;
+    }
+
+    .page2 .tape-one {
+        width: 90px;
+        height: 28px;
+        left: 30px;
+        top: -15px;
+    }
+
+    /*
+       The envelope is positioned inside the message card.
+       Keep its size based on the card rather than the screen.
+    */
+    .page2 .envelope {
+        inset: 18px;
+    }
+
+    .page2 .inside-card {
+        width: 88%;
+        height: 58%;
+        left: 6%;
+        top: 5%;
+        padding: 12px;
+    }
+
+    .page2 .inside-card h2 {
+        font-size: clamp(17px, 5vw, 21px);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    .page2 .inside-card p {
+        margin-top: 10px;
+        font-size: clamp(12px, 3.7vw, 15px);
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+    }
+
+    .page2 .envelope-seal {
+        width: 38px;
+        height: 38px;
+        font-size: 17px;
+    }
+
+    .page2 .pull-tab {
+        width: 55px;
+        height: 20px;
+    }
+
+    .page2 .put-back {
+        bottom: 10px;
+        padding: 7px 13px;
+        font-size: 10px;
+    }
+
+    .page2 .photo-card {
+        width: 100%;
+        min-height: 0;
+        height: auto;
+        padding: 18px;
+        box-shadow: 6px 6px 0 rgba(126, 173, 199, 0.45);
+    }
+
+    .page2 .photo-frame {
+        width: 100%;
+        height: auto;
+        min-height: 280px;
+    }
+
+    .page2 .photo-frame img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+    }
+
+    /*
+       Remove the old 620px mobile height.
+       That rule was making the HOME card extremely tall.
+    */
+    .page2 .home-card,
+    .page2 .home-card:hover {
+        width: 100%;
+        min-height: 110px;
+        height: 110px !important;
+        padding: 18px;
+        transform: none;
+    }
+
+    .page2 .home-inner {
+        width: 100%;
+        height: 100%;
+        font-size: 18px;
+    }
+
+
+    /* ---------- PAGE 3 ---------- */
+
+    .page3 {
+        min-height: 100svh;
+        padding: 20px 10px;
+    }
+
+    .surprise-page {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px 14px;
+        box-shadow:
+            6px 6px 0 var(--blue),
+            10px 10px 0 rgba(139, 107, 92, 0.3);
+    }
+
+    .third-photo {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 8px;
+        margin-bottom: 22px;
+    }
+
+    .third-photo img {
+        width: 100%;
+        height: auto;
+        max-height: 55vh;
+        object-fit: cover;
+    }
+
+    .lyric-card {
+        padding: 18px 12px;
+        margin: 18px 0;
+    }
+
+    .lyric-card p {
+        font-size: clamp(14px, 4.2vw, 17px);
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+    }
+
+    .small-label {
+        font-size: 9px;
+        letter-spacing: 2px;
+    }
+
+    .gotchu-card {
+        margin-top: 20px;
+        padding: 20px 14px;
+    }
+
+    .gotchu-card h1 {
+        font-size: clamp(19px, 6vw, 23px);
+        overflow-wrap: anywhere;
+    }
+
+    .gotchu-card p {
+        font-size: clamp(13px, 4vw, 15px);
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+    }
+
+    .play-button {
+        max-width: 100%;
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+
+    .real-home-button {
+        width: min(180px, 85%);
+        padding: 12px;
+        font-size: 13px;
+    }
+}
